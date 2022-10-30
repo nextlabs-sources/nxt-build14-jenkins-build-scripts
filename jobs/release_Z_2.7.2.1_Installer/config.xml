@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Release Build of TeamCenter DCE 2.7.2.1 Installer - builds code from:&#xd;
+&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;- &lt;b&gt;repo:&lt;/b&gt; &lt;a href=&quot;https://bitbucket.org/nxtlbs-devops/teamcenterdce&quot; target=&quot;_blank&quot;&gt;https://bitbucket.org/nxtlbs-devops/teamcenterdce&lt;/a&gt;&#xd;
+&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;- &lt;b&gt;branch:&lt;/b&gt; origin/release/TeamcenterDRM_2.7.2.1</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Item.Read:tchen</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.plugins.disk__usage.DiskUsageProperty plugin="disk-usage@0.28"/>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.3.2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@bitbucket.org:nxtlbs-devops/teamcenterdce.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>origin/release/TeamcenterDRM_2.7.2.1</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+      <hudson.plugins.git.extensions.impl.PruneStaleBranch/>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>export NLPROJECTROOT=${WORKSPACE}
+export NLEXTERNALDIR=D:/P4/external
+export NLEXTERNALDIR2=D:/P4/main_external
+export JAVA_HOME=${NLEXTERNALDIR2}/j2sdk/jdk1.7.0_71
+
+cd ${WORKSPACE}/DocumentControlExtension/main
+source ./setEnv
+./buildRelease</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>build-admin@nextlabs.com Chenwei.Low@nextlabs.com Jim.Jin@nextlabs.com Gavin.Chen@nextlabs.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers/>
+</project>
